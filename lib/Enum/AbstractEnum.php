@@ -36,6 +36,8 @@ abstract class AbstractEnum implements EnumInterface
             $value = static::$default;
         }
 
+        static::initialize();
+
         $this->setValue($value);
     }
 
@@ -58,18 +60,23 @@ abstract class AbstractEnum implements EnumInterface
         return $r->getConstants();
     }
 
-    /**
-     * @return mixed
-     */
-    public static function getValues()
+    protected static function initialize()
     {
         $className = get_called_class();
 
         if (!isset(self::$cache[$className]['values'])) {
             self::$cache[$className]['values'] = static::loadValues();
         }
+    }
 
-        return self::$cache[$className]['values'];
+    /**
+     * @return mixed
+     */
+    public static function getValues()
+    {
+        static::initialize();
+
+        return self::$cache[get_called_class()]['values'];
     }
 
     /**
