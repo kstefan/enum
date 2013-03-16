@@ -1,0 +1,23 @@
+{
+    "name": "kstefan/enum",
+    "description": "PHP implementation of Enum",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "enum"
+    ],
+    "authors": [
+        {
+            "name": "Karel Štefan",
+            "email": "dev@karelstefan.cz"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "autoload": {
+        "psr-0": {
+            "Enum": "lib/"
+        }
+    }
+}
