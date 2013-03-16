@@ -33,7 +33,7 @@ abstract class AbstractEnum implements EnumInterface
     public function __construct($value = null)
     {
         if (is_null($value)) {
-            $value = self::$default;
+            $value = static::$default;
         }
 
         $this->setValue($value);
