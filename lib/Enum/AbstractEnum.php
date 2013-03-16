@@ -159,6 +159,6 @@ abstract class AbstractEnum implements EnumInterface
      */
     public function __toString()
     {
-        return $this->value;
+        return (string)$this->value;
     }
 }
