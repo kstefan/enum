@@ -142,13 +142,21 @@ abstract class AbstractEnum implements EnumInterface
 
     /**
      * @param $value
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
-    protected function setValue($value)
+    protected function checkValue($value)
     {
         if (!static::hasValue($value)) {
             throw new InvalidArgumentException('Value "' . $value . '" is not defined');
         }
+    }
+
+    /**
+     * @param $value
+     */
+    protected function setValue($value)
+    {
+        $this->checkValue($value);
 
         $this->value = $value;
     }
@@ -159,6 +167,43 @@ abstract class AbstractEnum implements EnumInterface
     public function getLabel()
     {
         return $this->value;
+    }
+
+    /**
+     * @param EnumInterface|string $value
+     * @return bool
+     */
+    public function is($value)
+    {
+        if ($value instanceof EnumInterface) {
+            $value = $value->getValue();
+        }
+
+        $this->checkValue($value);
+
+        return $value == $this->getValue();
+    }
+
+    protected function normalizeValues(array $values)
+    {
+        return array_map(function($value) {
+            if ($value instanceof EnumInterface) {
+                $value = $value->getValue();
+            }
+
+            $this->checkValue($value);
+
+            return $value;
+        }, $values);
+    }
+
+    /**
+     * @param array $values [Enum::VALUE_1, new Enum(Enum:VALUE_2),]
+     * @return bool
+     */
+    public function in(array $values)
+    {
+        return in_array($this->getValue(), $this->normalizeValues($values));
     }
 
     /**
