@@ -51,6 +51,22 @@ abstract class AbstractEnum implements EnumInterface
     }
 
     /**
+     * @return static
+     */
+    public static function getDefault()
+    {
+        return new static(self::$default);
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function getDefaultValue()
+    {
+        return self::$default;
+    }
+
+    /**
      * @return array
      */
     protected static function loadValues()
